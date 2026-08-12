@@ -37,6 +37,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
     portfolio_tracking:
       +materialized: view
+  portfolio_tracking:
+    +materialized: view
     refined:
       +materialized: view
       +schema: STAGING
