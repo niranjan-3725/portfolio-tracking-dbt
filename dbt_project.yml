@@ -33,6 +33,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   portfolio_tracking:
+    +database: PORTFOLIO_TRACKING
     +materialized: view
     staging:
       +materialized: view
