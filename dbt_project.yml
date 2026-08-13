@@ -40,7 +40,7 @@ models:
       +materialized: view
       +schema: REFINED
     marts:
-      portifolio:
+      portfolio:
         +materialized: table
         +schema: MART_PORTFOLIO
 snapshots:
