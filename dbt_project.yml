@@ -1,13 +1,12 @@
-
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'portfolio_tracking'
-version: '1.0.0'
+name: "portfolio_tracking"
+version: "1.0.0"
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'default'
+profile: "default"
 
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
@@ -19,11 +18,10 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+target-path: "target" # directory which will store compiled SQL files
+clean-targets: # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
-
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -38,7 +36,7 @@ models:
     staging:
       +materialized: view
       +schema: STAGING
-    refined:    # Applies to all files under models/refined/
+    refined: # Applies to all files under models/refined/
       +materialized: view
       +schema: REFINED
     marts:
@@ -47,4 +45,14 @@ models:
         +schema: MART_PORTFOLIO
 snapshots:
   portfolio_tracking:
+    +database: PORTFOLIO_TRACKING
     +target_schema: SNAPSHOTS
+
+#configuring seeds
+seeds:
+  +database: PORTFOLIO_TRACKING
+  +schema: seed_data
+  +column_types:
+    LOAD_TS: TIMESTAMP
+  +post-hook:
+    - "UPDATE {{ this }} SET LOAD_TS = '{{ run_started_at }}' WHERE LOAD_TS is null"
